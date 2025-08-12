@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/rgallagher/anaconda3/lib/python3.12/http/server.py", line 1314, in <module>
+    test(
+  File "/home/rgallagher/anaconda3/lib/python3.12/http/server.py", line 1261, in test
+    with ServerClass(addr, HandlerClass) as httpd:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rgallagher/anaconda3/lib/python3.12/socketserver.py", line 457, in __init__
+    self.server_bind()
+  File "/home/rgallagher/anaconda3/lib/python3.12/http/server.py", line 1308, in server_bind
+    return super().server_bind()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rgallagher/anaconda3/lib/python3.12/http/server.py", line 136, in server_bind
+    socketserver.TCPServer.server_bind(self)
+  File "/home/rgallagher/anaconda3/lib/python3.12/socketserver.py", line 473, in server_bind
+    self.socket.bind(self.server_address)
+OSError: [Errno 98] Address already in use
+10.34.163.80 - - [05/Aug/2025 08:28:23] "GET / HTTP/1.1" 200 -
+10.34.163.80 - - [05/Aug/2025 08:28:23] "GET /src/main.jsx HTTP/1.1" 200 -
+10.34.163.80 - - [05/Aug/2025 08:28:27] "GET / HTTP/1.1" 304 -
+10.34.163.80 - - [05/Aug/2025 08:28:27] code 404, message File not found
+10.34.163.80 - - [05/Aug/2025 08:28:27] "GET /vite.svg HTTP/1.1" 404 -
+10.34.163.80 - - [05/Aug/2025 08:28:32] "GET / HTTP/1.1" 200 -
+10.34.163.80 - - [05/Aug/2025 08:28:32] "GET /src/main.jsx HTTP/1.1" 200 -
+10.34.163.80 - - [05/Aug/2025 08:28:32] code 404, message File not found
+10.34.163.80 - - [05/Aug/2025 08:28:32] "GET /vite.svg HTTP/1.1" 404 -
+10.34.163.80 - - [05/Aug/2025 08:28:35] "GET / HTTP/1.1" 200 -
+10.34.163.80 - - [05/Aug/2025 08:28:35] "GET /src/main.jsx HTTP/1.1" 200 -
+10.34.163.80 - - [05/Aug/2025 08:28:35] code 404, message File not found
+10.34.163.80 - - [05/Aug/2025 08:28:35] "GET /vite.svg HTTP/1.1" 404 -
+10.34.163.80 - - [05/Aug/2025 08:28:53] "GET / HTTP/1.1" 200 -
+10.34.163.80 - - [05/Aug/2025 08:28:53] "GET /src/main.jsx HTTP/1.1" 200 -
+10.34.163.80 - - [05/Aug/2025 08:28:53] code 404, message File not found
+10.34.163.80 - - [05/Aug/2025 08:28:53] "GET /vite.svg HTTP/1.1" 404 -
