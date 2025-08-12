@@ -13,6 +13,7 @@ library(timeDate)
 
 path1 = "/data/svi-prom/flowcell_10.4.1/"
 path2 = "/oldmaple/data/svi/prom/mcw_svi/flowcell_9.4.1/"
+path3 = "/oldmaple/data/svi/prom/mcw_svi/flowcell_10.4.1/" # <-- ADDED PATH
 
 all_subdirs = list()
 
@@ -25,8 +26,8 @@ rclone_pptx = system(rclone_command, intern=T)
 
 pptx_ids = rclone_pptx %>%
   str_extract_all("(?<=SVI[-_])\\d{4}") %>% # Use lookbehind to find digits after "SVI-"
-  unlist() %>%                          # Convert the list to a simple vector
-  unique()                              # Keep only the unique IDs
+  unlist() %>%                         # Convert the list to a simple vector
+  unique()                             # Keep only the unique IDs
 
 #rclone_pptx = as.data.frame(system(rclone_command, intern=T)) %>% rename(pptx=1)
 
@@ -100,7 +101,7 @@ accession = tryCatch({
 
 accession = accession %>% select("Sample ID", "proband", "Date Received", "MRN", 
                                  "Submitter ID/ Acc. No.", "AGen ID", "Comments") %>% 
-                          mutate(ID = str_extract(`Sample ID`, "\\d{4}"))
+  mutate(ID = str_extract(`Sample ID`, "\\d{4}"))
 
 
 # --- Get subdirectories from the first path ---
@@ -138,6 +139,24 @@ if (dir.exists(path2)) {
   }
 } else {
   warning(paste("Directory does not exist:", path2))
+}
+
+# --- Get subdirectories from the third path ---  # <-- ADDED BLOCK
+if (dir.exists(path3)) {
+  subdirs3_full = list.dirs(path3, recursive = FALSE, full.names = TRUE)
+  if (length(subdirs3_full) > 0) {
+    subdirs3_names = basename(subdirs3_full)
+    df3 = data.frame(
+      Sample = subdirs3_names,
+      SamplePath = rep(path3, length(subdirs3_names)),
+      stringsAsFactors = FALSE
+    )
+    all_subdirs[[length(all_subdirs) + 1]] = df3
+  } else {
+    message(paste("No subdirectories found in:", path3))
+  }
+} else {
+  warning(paste("Directory does not exist:", path3))
 }
 
 # --- Combine the data frames ---
@@ -206,7 +225,7 @@ prioritized_list = scheduler %>%
   mutate(
     priority_level = case_when(
       # --- Check if the sample is in the hot list first ---
-      `Sample ID` %in% hotlist$`Sample.ID`           ~ 0, # Priority 0 for critical samples
+      `Sample ID` %in% hotlist$`Sample.ID`          ~ 0, # Priority 0 for critical samples
       
       Identifier == "UIC"                         ~ 1,
       Identifier == "UDD" & year_received == 2025 ~ 2,
